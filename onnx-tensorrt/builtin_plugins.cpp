@@ -70,13 +70,13 @@ static bool registerBuiltinPlugin(const char* plugin_type,
       registerBuiltinPlugin(plugin_type_string, _build_##PluginClass); \
   IGNORE_UNUSED_GLOBAL(_registered_##PluginClass)
 
+
 REGISTER_BUILTIN_PLUGIN("FancyActivation",       FancyActivationPlugin);
 REGISTER_BUILTIN_PLUGIN("ResizeNearest",         ResizeNearestPlugin);
 REGISTER_BUILTIN_PLUGIN("Split"        ,         SplitPlugin);
 REGISTER_BUILTIN_PLUGIN("InstanceNormalization", InstanceNormalizationPlugin);
 REGISTER_BUILTIN_PLUGIN("DCNv2", DCNv2Plugin);
 
-REGISTER_BUILTIN_NVPLUGIN("Concat", ConcatPlugin);
 
 } // namespace
 

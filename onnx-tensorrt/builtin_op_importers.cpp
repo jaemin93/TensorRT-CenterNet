@@ -665,7 +665,7 @@ DEFINE_BUILTIN_OP_IMPORTER(Concat) {
   int axis = attrs.get<int>("axis");
   TRT_CHECK(convert_axis(axis, nbDims));
 #if NV_TENSORRT_MAJOR >= 4
-  auto* layer = ctx->network()->addConcatenation(tensors.data(), tensors.size());
+  nvinfer1::IConcatenationLayer* layer = ctx->network()->addConcatenation(tensors.data(), tensors.size()); 
   ASSERT(layer, ErrorCode::kUNSUPPORTED_NODE);
   layer->setAxis(axis);
   RETURN_FIRST_OUTPUT(layer);
@@ -675,10 +675,6 @@ DEFINE_BUILTIN_OP_IMPORTER(Concat) {
       ctx->network()->addConcatenation(tensors.data(), tensors.size()));
   } else {
     ASSERT(inputs.at(0).shape().nbDims == 3, ErrorCode::kUNSUPPORTED_NODE);
-    using namespace nvinfer1::plugin;
-    RETURN_FIRST_OUTPUT(
-        ctx->addPlugin(
-            new NvPlugin(createConcatPlugin(1 + axis, false)), tensors));
   }
 #endif // NV_TENSORRT_MAJOR < 4
 }
